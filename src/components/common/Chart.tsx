@@ -2,8 +2,6 @@
 
 import React from 'react';
 import {
-    LineChart,
-    Line,
     BarChart,
     Bar,
     PieChart,
@@ -62,7 +60,7 @@ export function GPATrendChart({ data, height = 200 }: GPATrendChartProps) {
                         color: '#fff',
                         fontSize: '12px',
                     }}
-                    formatter={(value: number) => [value.toFixed(2), 'المعدل']}
+                    formatter={(value) => [typeof value === 'number' ? value.toFixed(2) : value, 'المعدل']}
                 />
                 <Area
                     type="monotone"
@@ -93,7 +91,7 @@ export function GradesDistributionChart({ data, height = 200 }: GradesChartProps
         <ResponsiveContainer width="100%" height={height}>
             <PieChart>
                 <Pie
-                    data={data}
+                    data={data as unknown as Array<{ grade: string; count: number; color: string }>}
                     cx="50%"
                     cy="50%"
                     innerRadius={50}
@@ -114,7 +112,7 @@ export function GradesDistributionChart({ data, height = 200 }: GradesChartProps
                         color: '#fff',
                         fontSize: '12px',
                     }}
-                    formatter={(value: number, name: string) => [value, name]}
+                    formatter={(value, name) => [value, name]}
                 />
                 <Legend
                     iconType="circle"
